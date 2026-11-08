@@ -5,7 +5,7 @@ import platform
 import random
 import subprocess
 import time
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
@@ -94,11 +94,12 @@ def run_experiment(path, dry_run=False, agent_factory=OllamaAgent):
             by_task = defaultdict(list)
             for row in rows:
                 # Lỗi API không được coi là câu trả lời nhất quán.
-                by_task[row.task_id].append(row.actual_output if row.error_type is None else uuid4().hex)
+                by_task[row.task_id].append(row.actual_output if row.error_type is None else None)
             writer.writerow({"agent_id": agent_id, "condition": config.condition, "n": len(rows),
                 "accuracy": sum(r.score for r in rows)/len(rows),
                 "failure_rate": sum(r.error_type is not None for r in rows)/len(rows),
                 "mean_latency_s": lat["mean"], "median_latency_s": lat["median"],
                 "p95_latency_s": lat["p95"],
-                "consistency": sum(consistency(v) for v in by_task.values())/len(by_task)})
+                "consistency": sum(max(Counter(x for x in v if x is not None).values(), default=0)
+                                   / len(v) for v in by_task.values())/len(by_task)})
     return {"mode": "live", "output": str(out), "runs": len(order)}

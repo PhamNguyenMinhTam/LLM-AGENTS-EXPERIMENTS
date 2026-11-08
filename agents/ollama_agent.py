@@ -18,6 +18,9 @@ def parse_response(data):
     if not isinstance(content, str):
         raise ValueError("Invalid message content")
     count, duration = data.get("eval_count"), data.get("eval_duration")
+    for value in [count, duration, data.get("prompt_eval_count")]:
+        if value is not None and (not isinstance(value, int) or isinstance(value, bool) or value < 0):
+            raise ValueError("Invalid Ollama token count or duration")
     throughput = count / (duration / 1e9) if count is not None and duration else None
     return AgentResponse(content, data.get("prompt_eval_count"), count, throughput)
 

@@ -7,7 +7,7 @@ import yaml
 from pydantic import ValidationError
 
 from agents.base_agent import AgentResponse
-from controller.config import ROOT
+from controller.config import ROOT, load_config
 from controller.experiment_runner import run_experiment
 from evaluation.result_schema import RunResult
 
@@ -36,7 +36,7 @@ def test_dry_run(config_path, tmp_path):
     def forbidden(_):
         pytest.fail("Dry-run must not initialize agent")
     result = run_experiment(path, True, forbidden)
-    assert result["planned_calls"] == 20
+    assert result["planned_calls"] == 2 * 2 * load_config(config_path).repetitions
     assert not (tmp_path / "output").exists()
 
 
@@ -44,13 +44,13 @@ def test_mock_output_and_schema(config_path, tmp_path):
     result = run_experiment(temp_config(config_path, tmp_path), agent_factory=FakeAgent)
     out = Path(result["output"])
     rows = [RunResult.model_validate_json(line) for line in (out/"runs.jsonl").read_text().splitlines()]
-    assert len(rows) == 20
+    assert len(rows) == 2 * 2 * load_config(config_path).repetitions
     assert all(r.success and r.score == 1 and r.error_type is None for r in rows)
     assert all(r.resource_metrics["ram_peak_bytes"] is None for r in rows)
     summaries = list(csv.DictReader((out/"summary.csv").open()))
     assert len(summaries) == 2
     assert all(float(s["accuracy"]) == 1 for s in summaries)
-    manifest = json.loads((out/"manifest.json").read_text())
+    manifest = json.loads((out/"manifest.json").read_text(encoding="utf-8"))
     assert len(manifest["dataset_sha256"]) == 64
     assert manifest["agents"][0]["model_name"] == "test-model:1b"
     invalid = rows[0].model_dump()
