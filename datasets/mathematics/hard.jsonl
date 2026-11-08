@@ -1,0 +1,1 @@
+{"task_id": "difficulty-hard", "domain": "mathematics", "difficulty": "hard", "input": "Tính tổng các số nguyên từ 1 đến 1000. Chỉ ghi số.", "expected_output": "500500", "split": "development"}

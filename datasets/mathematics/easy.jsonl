@@ -1,0 +1,1 @@
+{"task_id": "difficulty-easy", "domain": "mathematics", "difficulty": "easy", "input": "2 + 3 = ?", "expected_output": "5", "split": "development"}
