@@ -7,7 +7,7 @@ import yaml
 from pydantic import ValidationError
 
 from agents.base_agent import AgentResponse
-from controller.config import ROOT, load_config
+from controller.config import load_config
 from controller.experiment_runner import run_experiment
 from evaluation.result_schema import RunResult
 
@@ -46,6 +46,7 @@ def test_mock_output_and_schema(config_path, tmp_path):
     rows = [RunResult.model_validate_json(line) for line in (out/"runs.jsonl").read_text().splitlines()]
     assert len(rows) == 2 * 2 * load_config(config_path).repetitions
     assert all(r.success and r.score == 1 and r.error_type is None for r in rows)
+    assert all(r.timestamp == r.start_time and r.timestamp.tzinfo is not None for r in rows)
     assert all(r.resource_metrics["ram_peak_bytes"] is None for r in rows)
     summaries = list(csv.DictReader((out/"summary.csv").open()))
     assert len(summaries) == 2
