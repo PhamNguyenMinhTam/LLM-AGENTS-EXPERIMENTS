@@ -1,0 +1,4 @@
+# Tham khảo cấu hình; nguồn thực thi là từng experiments/*/config.yaml.
+agent_ids: [agent-a, agent-b]
+endpoint_variables: [OLLAMA_ENDPOINT_A, OLLAMA_ENDPOINT_B]
+communication: controller_only

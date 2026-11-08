@@ -1,0 +1,4 @@
+# Danh mục metric MVP; runner lấy evaluation_metrics từ experiment config.
+automatic: [exact_match, latency, tokens, consistency, failure_rate]
+manual: [reasoning_quality, hallucination_rate, instruction_following]
+not_instrumented: [cpu, gpu, ram_peak, vram_peak, energy, ttft]

@@ -1,0 +1,1 @@
+{"task_id": "k1", "domain": "classification", "difficulty": "easy", "input": "Phân loại cảm xúc: \"Tôi rất vui\". Chỉ ghi positive hoặc negative.", "expected_output": "positive", "split": "development"}

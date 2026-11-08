@@ -1,0 +1,2 @@
+{"task_id": "m1", "domain": "mathematics", "difficulty": "easy", "input": "2 + 3 = ?", "expected_output": "5", "split": "development"}
+{"task_id": "m2", "domain": "mathematics", "difficulty": "easy", "input": "7 × 8 = ?", "expected_output": "56", "split": "development"}

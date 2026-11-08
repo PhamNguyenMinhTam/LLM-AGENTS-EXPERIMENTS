@@ -1,0 +1,1 @@
+{"task_id": "c1", "domain": "coding", "difficulty": "easy", "input": "Trong Python, len([1, 2, 3]) trả về gì? Chỉ ghi số.", "expected_output": "3", "split": "development"}

@@ -1,0 +1,3 @@
+# Điền từ kiểm kê thực tế trên máy inference; không suy luận từ controller.
+laptop-a: {cpu: null, gpu: null, ram_bytes: null, vram_bytes: null, os: null, power_mode: null}
+laptop-b: {cpu: null, gpu: null, ram_bytes: null, vram_bytes: null, os: null, power_mode: null}
