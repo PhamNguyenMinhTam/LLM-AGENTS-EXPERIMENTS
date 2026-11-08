@@ -1,3 +1,4 @@
+# E01: --config conditions/<level>.yaml chọn điều kiện; runtime dùng chung.
 from pathlib import Path
 from scripts.run_experiment import main
 
