@@ -35,3 +35,8 @@
 - [ ] Lưu phiên bản model, code và config.
 - [ ] Cập nhật research log.
 - [ ] Hoàn thành báo cáo thí nghiệm.
+
+## E. Điều kiện branch
+- [ ] Kiểm tra và thực thi điều kiện q4.
+- [ ] Kiểm tra và thực thi điều kiện q8.
+- [ ] Kiểm tra và thực thi điều kiện fp16.

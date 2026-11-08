@@ -28,3 +28,15 @@ Runner dùng chung, không có giao tiếp giữa agent. Branch dành riêng: `e
 Kỳ vọng kiểm chứng được giả thuyết cùng khoảng bất định, không bảo đảm hướng hiệu ứng.
 Config mặc định là điều kiện đối chứng. Runtime đối chứng đã triển khai; điều kiện so sánh cần điền cấu hình và thiết bị thực tế.
 Chưa chạy benchmark thực; không có kết quả khoa học trong repository.
+
+## Điều kiện đã đăng ký trên branch
+
+- `q4`: `experiments/E05_quantization/conditions/q4.yaml`
+- `q8`: `experiments/E05_quantization/conditions/q8.yaml`
+- `fp16`: `experiments/E05_quantization/conditions/fp16.yaml`
+
+Chạy từng điều kiện bằng `python -m scripts.run_experiment --config <đường-dẫn-YAML> --dry-run`, sau đó bỏ `--dry-run` khi đã hoàn tất preflight.
+
+Biến môi trường cần khai báo: `E05_FP16_DIGEST`, `E05_FP16_NAME`, `E05_FP16_QUANTIZATION`, `E05_Q4_DIGEST`, `E05_Q4_NAME`, `E05_Q4_QUANTIZATION`, `E05_Q8_DIGEST`, `E05_Q8_NAME`, `E05_Q8_QUANTIZATION`, `HARDWARE_A`, `HARDWARE_B`, `OLLAMA_ENDPOINT_A`, `OLLAMA_ENDPOINT_B`. Các biến model theo điều kiện phải trỏ đúng tag/digest/quantization; tên mức không bảo đảm metadata tương ứng, cần rà soát trước chạy.
+
+Xuất các mức quantization từ cùng trọng số; xác minh metadata và cấu hình FP16 khả thi. Chưa có kết quả nghiên cứu. Smoke task không đủ để kết luận.
