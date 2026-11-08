@@ -26,6 +26,7 @@ class RunResult(BaseModel):
     score: float = Field(ge=0, le=1)
     success: bool
     error_type: str | None
+    timestamp: datetime
     start_time: datetime
     end_time: datetime
     latency: float = Field(ge=0)
