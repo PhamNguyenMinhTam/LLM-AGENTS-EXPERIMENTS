@@ -28,3 +28,16 @@ Runner dùng chung, không có giao tiếp giữa agent. Branch dành riêng: `e
 Kỳ vọng kiểm chứng được giả thuyết cùng khoảng bất định, không bảo đảm hướng hiệu ứng.
 Config mặc định là điều kiện đối chứng. Runtime đối chứng đã triển khai; điều kiện so sánh cần điền cấu hình và thiết bị thực tế.
 Chưa chạy benchmark thực; không có kết quả khoa học trong repository.
+
+## Điều kiện đã đăng ký trên branch
+
+- `x-small`: `experiments/E06_hardware_model/conditions/x-small.yaml`
+- `x-large`: `experiments/E06_hardware_model/conditions/x-large.yaml`
+- `y-small`: `experiments/E06_hardware_model/conditions/y-small.yaml`
+- `y-large`: `experiments/E06_hardware_model/conditions/y-large.yaml`
+
+Chạy từng điều kiện bằng `python -m scripts.run_experiment --config <đường-dẫn-YAML> --dry-run`, sau đó bỏ `--dry-run` khi đã hoàn tất preflight.
+
+Biến môi trường cần khai báo: `E06_LARGE_DIGEST`, `E06_LARGE_NAME`, `E06_LARGE_QUANTIZATION`, `E06_SMALL_DIGEST`, `E06_SMALL_NAME`, `E06_SMALL_QUANTIZATION`, `HARDWARE_A`, `HARDWARE_B`, `OLLAMA_ENDPOINT_A`, `OLLAMA_ENDPOINT_B`. Các biến model theo điều kiện phải trỏ đúng tag/digest/quantization; tên mức không bảo đảm metadata tương ứng, cần rà soát trước chạy.
+
+Đăng ký thiết kế factorial đầy đủ; đo từng ô chip × model; giữ task ghép cặp và ghi ô không khả thi. Chưa có kết quả nghiên cứu. Smoke task không đủ để kết luận.

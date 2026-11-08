@@ -1,0 +1,30 @@
+experiment_id: E06
+condition: y-small
+domain: mathematics
+dataset_path: datasets/mathematics/smoke.jsonl
+repetitions: 3
+agents:
+- agent_id: agent-b
+  hardware_id: ${HARDWARE_B}
+  endpoint: ${OLLAMA_ENDPOINT_B}
+  model_name: ${E06_SMALL_NAME}
+  model_digest: ${E06_SMALL_DIGEST}
+  quantization: ${E06_SMALL_QUANTIZATION}
+  prompt_version: generalist-v1
+  system_prompt: Trả lời chỉ đáp án cuối cùng, không thêm giải thích.
+  inference:
+    temperature: 0
+    seed: 42
+    num_ctx: 4096
+    num_predict: 256
+  timeout: 120
+memory: none
+feedback: none
+tools: []
+evaluation_metrics:
+- exact_match
+- latency
+- tokens
+- consistency
+- failure_rate
+output_directory: results/raw/E06/y-small
