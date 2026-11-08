@@ -1,15 +1,46 @@
-# LLM Agent Experiments
+# LLM Agents Experiments
+
+## Mục lục
+
+- [Repository sử dụng](#repository-sử-dụng)
+- [Giới thiệu và bối cảnh](#giới-thiệu-và-bối-cảnh)
+- [Mục tiêu](#mục-tiêu)
+- [Phạm vi và khái niệm](#phạm-vi-và-khái-niệm)
+- [Kiến trúc và công nghệ](#kiến-trúc-và-công-nghệ)
+- [Cấu trúc repository](#cấu-trúc-repository)
+- [Mười hai ma trận và yếu tố thay đổi](#mười-hai-ma-trận-và-yếu-tố-thay-đổi)
+- [Clone và cài đặt Ubuntu](#clone-và-cài-đặt-ubuntu)
+- [Cấu hình laptop A/B](#cấu-hình-laptop-ab)
+- [Chạy E01 và thí nghiệm khác](#chạy-e01-và-thí-nghiệm-khác)
+- [Thu thập và đánh giá](#thu-thập-và-đánh-giá)
+- [Lộ trình nghiên cứu](#lộ-trình-nghiên-cứu)
+- [Checklist tiến độ](#checklist-tiến-độ)
+- [Tiến độ và chiến lược branch](#tiến-độ-và-chiến-lược-branch)
+- [Chuyển branch và cập nhật tiến độ](#chuyển-branch-và-cập-nhật-tiến-độ)
+- [Hướng phát triển](#hướng-phát-triển)
+
+## Repository sử dụng
+Repository duy nhất: [PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS](https://github.com/PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS). Không tạo mới, không đổi tên hoặc tự thay visibility.
 
 ## Giới thiệu và bối cảnh
 Dự án iTwin Lab 2026 đánh giá năng lực, hành vi, hiệu năng và khả năng thích nghi của LLM agent độc lập. Hai laptop Ubuntu, mỗi máy chạy một Ollama và một agent; Python Controller phân phối nhiệm vụ, lưu dữ liệu và đánh giá riêng từng agent. Ban đầu dùng cùng chip/model; sau đó thay có kiểm soát từng yếu tố.
 
 ## Mục tiêu
-Đo độ ổn định; tách ảnh hưởng họ model, kích thước, quantization và phần cứng; khảo sát domain, độ khó, prompt; xây dựng protocol tools, memory và feedback có đối chứng. Xem [mục tiêu](docs/research_objectives.md) và [phương pháp](docs/methodology.md).
+Khảo sát năng lực nhiệm vụ, hành vi và tuân thủ, hiệu năng phần cứng, chuyên môn hóa, thích nghi và tính tái lập. Hai chip cùng loại vẫn có thể khác hiệu năng do nguồn điện, nhiệt độ và cấu hình hệ thống. Đo độ ổn định; tách ảnh hưởng họ model, kích thước, quantization và phần cứng; khảo sát domain, độ khó, prompt; xây dựng protocol tools, memory và feedback có đối chứng. Xem [mục tiêu](docs/research_objectives.md) và [phương pháp](docs/methodology.md).
 
 ## Phạm vi và khái niệm
 Không có giao tiếp A–B hoặc phối hợp multi-agent. Comparison là so sánh điều kiện; Adaptation là điều chỉnh trạng thái/chiến lược qua kinh nghiệm; Model Evolution đòi hỏi thay đổi model có cơ chế học và bằng chứng. Thay model, prompt hoặc chip không chứng minh tiến hóa.
 
 ## Kiến trúc và công nghệ
+```mermaid
+flowchart LR
+    C[Python Controller] --> A[Agent A / Ollama laptop A]
+    C --> B[Agent B / Ollama laptop B]
+    A --> R[Results / JSONL]
+    B --> R
+    R --> E[Evaluation / CSV]
+```
+Không có kết nối trực tiếp giữa Agent A và Agent B. Codex hỗ trợ xây dựng mã, kiểm thử và bảo trì repository; không tham gia làm đối tượng đo.
 Controller → Agent A / Ollama A và Controller → Agent B / Ollama B → evaluator → JSONL/CSV. Mỗi request độc lập, chỉ input được gửi đến model. Python ≥3.11, YAML/Pydantic, Git/GitHub Actions; mục tiêu triển khai Ubuntu. Xem [kiến trúc](docs/architecture.md).
 
 ## Cấu trúc repository
@@ -45,7 +76,11 @@ Mỗi E có README.md, CHECKLIST.md, EVALUATION.md, config.yaml, run.py và resu
 | E12 | Feedback | None / Binary / Detailed | Khả năng sửa lỗi | [Kế hoạch](experiments/E12_feedback/README.md), [Checklist](experiments/E12_feedback/CHECKLIST.md), [Đánh giá](experiments/E12_feedback/EVALUATION.md) |
 
 
-## Cài đặt Ubuntu
+## Clone và cài đặt Ubuntu
+```bash
+git clone https://github.com/PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS.git
+cd LLM-AGENTS-EXPERIMENTS
+```
 ```bash
 bash scripts/setup_ubuntu.sh
 source .venv/bin/activate
@@ -72,9 +107,42 @@ Cần `pip install -r requirements.txt` trước khi chạy wrapper. Thay đư�
 Mỗi run lưu manifest (config resolve, dataset SHA256, commit, dirty flag), JSONL từng task và CSV từng agent ở `results/raw/E##/<run_id>/`. Không commit raw logs hoặc dữ liệu nhạy cảm. Expected output chỉ dùng evaluator, không đưa vào request. Exact-match là scorer MVP; coding tổng quát cần sandbox/test suite chưa có.
 Resource metrics, energy và TTFT chưa đo, ghi null; metrics định tính cần rubric và người chấm. Xem [hướng dẫn](docs/evaluation_guide.md) và từng EVALUATION.md. Không có kết quả benchmark thật trong repository; smoke task chỉ kiểm tra luồng.
 
+## Lộ trình nghiên cứu
+| Giai đoạn | Nội dung | Điều kiện chuyển bước |
+|---|---|---|
+| Phase 0 | Repository và môi trường | Lint/tests đạt, hai endpoint được xác minh |
+| Phase 1 | Baseline E01 | Có dữ liệu lặp hợp lệ và sai số được báo cáo |
+| Phase 2 | Model và phần cứng E02–E06 | Cấu hình ghép cặp, đủ ô so sánh hoặc ghi không khả thi |
+| Phase 3 | Domain và hành vi E07–E10 | Dataset/rubric chuẩn hóa, tool trace nếu bật công cụ |
+| Phase 4 | Adaptation E11–E12 | Runtime can thiệp và tách development/final được kiểm chứng |
+| Phase 5 | Đánh giá và báo cáo | Có CI thống kê, phân tích lỗi và hồ sơ tái lập |
+
+## Checklist tiến độ
+- [x] Tạo framework local và đủ bộ tài liệu E01–E12.
+- [x] Kiểm thử mock/dry-run không phụ thuộc GPU.
+- [ ] Push và xác minh đủ 13 remote branch.
+- [ ] Xác minh GitHub Actions chạy lint/tests.
+- [ ] Cài và xác minh hai laptop Linux/Ollama.
+- [ ] Khóa dataset nghiên cứu và rubric.
+- [ ] Chạy baseline E01 thật và lưu dữ liệu.
+- [ ] Thực hiện E02–E10 theo điều kiện kiểm soát.
+- [ ] Triển khai rồi đánh giá memory/feedback E11–E12.
+- [ ] Hoàn thành phân tích thống kê và báo cáo.
+
 ## Tiến độ và chiến lược branch
 [Checklist tổng](docs/experiment_checklist.md) và các checklist trong bảng trên theo dõi chuẩn bị, thực thi, đánh giá, hoàn thành. Không đánh dấu hoàn thành khi chưa có bằng chứng.
 Main chứa nền tảng; 12 branch `experiment/e##-...` tạo trực tiếp từ main, có commit kế hoạch điều kiện riêng và không merge ngược. Cập nhật nền tảng trên main trước, sau đó tích hợp có kiểm soát. Xem [biên bản kiểm tra](docs/verification.md).
 
+## Chuyển branch và cập nhật tiến độ
+```bash
+git fetch origin
+git switch experiment/e03-hardware
+python -m scripts.run_experiment --config experiments/E03_hardware/config.yaml --dry-run
+git switch main
+```
+Đánh dấu checklist tương ứng khi đã có bằng chứng; ghi ngày, run_id, commit/config/checksum và hạn chế vào `docs/research_log.md`. Chạy `python -m ruff check .` và `python -m pytest -q` trước commit. Không merge branch thí nghiệm về main nếu chưa có yêu cầu.
+
 ## Hướng phát triển
 Chuẩn bị benchmark development/final có license; triển khai collector trên inference host; streaming TTFT; coding sandbox; tool loop có allowlist; memory tách session và feedback có trace; phân tích bootstrap/Pareto và biểu đồ. Chỉ mở rộng sang phối hợp agent khi có thiết kế nghiên cứu mới.
+
+Multi-Agent Communication chỉ xem xét ở giai đoạn sau với thiết kế nghiên cứu riêng; không thuộc Phase 1.
