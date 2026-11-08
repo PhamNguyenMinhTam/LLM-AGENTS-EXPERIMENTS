@@ -120,8 +120,8 @@ Resource metrics, energy và TTFT chưa đo, ghi null; metrics định tính c�
 ## Checklist tiến độ
 - [x] Tạo framework local và đủ bộ tài liệu E01–E12.
 - [x] Kiểm thử mock/dry-run không phụ thuộc GPU.
-- [ ] Push và xác minh đủ 13 remote branch.
-- [ ] Xác minh GitHub Actions chạy lint/tests.
+- [x] Push và xác minh đủ 13 remote branch.
+- [x] Xác minh GitHub Actions chạy lint/tests trên main.
 - [ ] Cài và xác minh hai laptop Linux/Ollama.
 - [ ] Khóa dataset nghiên cứu và rubric.
 - [ ] Chạy baseline E01 thật và lưu dữ liệu.
