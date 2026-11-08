@@ -28,3 +28,17 @@ Runner dùng chung, không có giao tiếp giữa agent. Branch dành riêng: `e
 Kỳ vọng kiểm chứng được giả thuyết cùng khoảng bất định, không bảo đảm hướng hiệu ứng.
 Config mặc định là điều kiện đối chứng. Điều kiện can thiệp tools/memory/feedback chưa có runtime; chỉ dry-run được hỗ trợ và live bị chặn khi bật.
 Chưa chạy benchmark thực; không có kết quả khoa học trong repository.
+
+## Điều kiện đã đăng ký trên branch
+
+- `none`: `experiments/E11_memory/conditions/none.yaml`
+- `short-term`: `experiments/E11_memory/conditions/short-term.yaml`
+- `long-term`: `experiments/E11_memory/conditions/long-term.yaml`
+
+Chạy từng điều kiện bằng `python -m scripts.run_experiment --config <đường-dẫn-YAML> --dry-run`, sau đó bỏ `--dry-run` khi đã hoàn tất preflight.
+
+Biến môi trường cần khai báo: `HARDWARE_A`, `HARDWARE_B`, `MODEL_DIGEST`, `MODEL_NAME`, `OLLAMA_ENDPOINT_A`, `OLLAMA_ENDPOINT_B`, `QUANTIZATION`. Các biến model theo điều kiện phải trỏ đúng tag/digest/quantization; tên mức không bảo đảm metadata tương ứng, cần rà soát trước chạy.
+
+Cách ly memory theo agent/session; reset giữa điều kiện; đóng băng memory trước final; cần triển khai runtime. Chưa có kết quả nghiên cứu. Smoke task không đủ để kết luận.
+
+Can thiệp chưa có runtime; dry-run báo unsupported, live từ chối.

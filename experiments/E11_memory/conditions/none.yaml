@@ -1,0 +1,44 @@
+experiment_id: E11
+condition: none
+domain: mathematics
+dataset_path: datasets/mathematics/smoke.jsonl
+repetitions: 3
+agents:
+- agent_id: agent-a
+  hardware_id: ${HARDWARE_A}
+  endpoint: ${OLLAMA_ENDPOINT_A}
+  model_name: ${MODEL_NAME}
+  model_digest: ${MODEL_DIGEST}
+  quantization: ${QUANTIZATION}
+  prompt_version: generalist-v1
+  system_prompt: Trả lời chỉ đáp án cuối cùng, không thêm giải thích.
+  inference:
+    temperature: 0
+    seed: 42
+    num_ctx: 4096
+    num_predict: 256
+  timeout: 120
+- agent_id: agent-b
+  hardware_id: ${HARDWARE_B}
+  endpoint: ${OLLAMA_ENDPOINT_B}
+  model_name: ${MODEL_NAME}
+  model_digest: ${MODEL_DIGEST}
+  quantization: ${QUANTIZATION}
+  prompt_version: generalist-v1
+  system_prompt: Trả lời chỉ đáp án cuối cùng, không thêm giải thích.
+  inference:
+    temperature: 0
+    seed: 42
+    num_ctx: 4096
+    num_predict: 256
+  timeout: 120
+memory: none
+feedback: none
+tools: []
+evaluation_metrics:
+- exact_match
+- latency
+- tokens
+- consistency
+- failure_rate
+output_directory: results/raw/E11/none
