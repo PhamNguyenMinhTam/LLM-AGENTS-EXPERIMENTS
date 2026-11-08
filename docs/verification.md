@@ -33,3 +33,10 @@ gh repo edit mWorkSTE-Tech/llm-agent-experiments --default-branch main
 gh run list --limit 5
 ```
 Nếu repo tồn tại, fetch và so sánh nội dung/lịch sử trước; không force-push, không chạy tạo mới và không ghi đè dữ liệu. Nếu tài khoản CLI khác owner dự kiến, xác định đúng owner trước khi xuất bản.
+
+## Ki?m tra b? sung cu?i
+- 36 YAML ?i?u ki?n tr?n c?c experiment branch qua dry-run; kh?ng g?i API.
+- CLI module v? wrapper E01 qua dry-run v?i bi?n m?u; setup_ubuntu.sh qua bash -n (ki?m tra c? ph?p, ch?a ch?y c?i Ubuntu).
+- C?c li?n k?t Markdown n?i b? tr?n main h?p l?; 130 t?p ???c theo d?i.
+- Qu?t c?c t?p theo d?i tr?n c? 13 branch: kh?ng c? .env/private key, kh?ng ph?t hi?n m?u token GitHub/OpenAI ph? bi?n; ??y kh?ng ph?i b?o ??m ph?t hi?n m?i d?ng secret.
+- C?p nh?t bi?n b?n cu?i tr?n main r?i rebase c? ki?m so?t 12 commit ?i?u ki?n l?n main m?i, gi? m?i branch c? ??ng m?t commit ri?ng v? cha tr?c ti?p l? main.
