@@ -28,3 +28,14 @@ Runner dùng chung, không có giao tiếp giữa agent. Branch dành riêng: `e
 Kỳ vọng kiểm chứng được giả thuyết cùng khoảng bất định, không bảo đảm hướng hiệu ứng.
 Config mặc định là điều kiện đối chứng. Runtime đối chứng đã triển khai; điều kiện so sánh cần điền cấu hình và thiết bị thực tế.
 Chưa chạy benchmark thực; không có kết quả khoa học trong repository.
+
+## Điều kiện đã đăng ký trên branch
+
+- `hardware-x`: `experiments/E03_hardware/conditions/hardware-x.yaml`
+- `hardware-y`: `experiments/E03_hardware/conditions/hardware-y.yaml`
+
+Chạy từng điều kiện bằng `python -m scripts.run_experiment --config <đường-dẫn-YAML> --dry-run`, sau đó bỏ `--dry-run` khi đã hoàn tất preflight.
+
+Biến môi trường cần khai báo: `HARDWARE_A`, `HARDWARE_B`, `MODEL_DIGEST`, `MODEL_NAME`, `OLLAMA_ENDPOINT_A`, `OLLAMA_ENDPOINT_B`, `QUANTIZATION`. Các biến model theo điều kiện phải trỏ đúng tag/digest/quantization; tên mức không bảo đảm metadata tương ứng, cần rà soát trước chạy.
+
+Dùng cùng digest trên hai máy; cố định chế độ nguồn, nhiệt độ, backend và số luồng. Chưa có kết quả nghiên cứu. Smoke task không đủ để kết luận.
