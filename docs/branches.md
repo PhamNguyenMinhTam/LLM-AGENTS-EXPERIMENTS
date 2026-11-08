@@ -14,4 +14,4 @@
 - `experiment/e11-memory`
 - `experiment/e12-feedback`
 
-Mỗi branch thí nghiệm xuất phát main; commit riêng thêm điều kiện YAML và protocol. Chưa push GitHub.
+Mỗi branch thí nghiệm xuất phát main; commit riêng thêm điều kiện YAML và protocol. Đã push và xác minh đủ 13 remote branch tại PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS; cập nhật nền tảng từ main được merge có kiểm soát vào từng branch, giữ nguyên commit thí nghiệm.
