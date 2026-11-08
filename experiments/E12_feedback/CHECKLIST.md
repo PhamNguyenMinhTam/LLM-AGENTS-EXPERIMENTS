@@ -35,3 +35,14 @@
 - [ ] Lưu phiên bản model, code và config.
 - [ ] Cập nhật research log.
 - [ ] Hoàn thành báo cáo thí nghiệm.
+
+## Kiểm tra bổ sung theo yêu cầu triển khai
+
+- [ ] Chọn và ghi rõ model, hardware, domain cho từng điều kiện.
+- [ ] Kiểm tra config trước chạy.
+- [ ] Chạy baseline liên quan trước các điều kiện so sánh.
+- [ ] Xác minh tính toàn vẹn dữ liệu bằng checksum và số run.
+- [ ] Tính trung bình, độ phân tán và phân tích kết quả.
+- [ ] Thiết kế feedback đúng/sai và feedback chi tiết.
+- [ ] Kiểm tra khả năng sửa lỗi bằng before/after.
+- [ ] Thử nghiệm khả năng chống phản hồi sai.

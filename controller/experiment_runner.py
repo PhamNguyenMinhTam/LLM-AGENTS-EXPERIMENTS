@@ -7,7 +7,6 @@ import subprocess
 import time
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
-from pathlib import Path
 from uuid import uuid4
 
 import pydantic
@@ -17,7 +16,7 @@ from agents.ollama_agent import OllamaAgent
 from controller.config import ROOT, load_config, load_tasks
 from controller.task_dispatcher import dispatch
 from evaluation.evaluator import evaluate
-from evaluation.metrics import consistency, latency_statistics
+from evaluation.metrics import latency_statistics
 from evaluation.result_schema import RunResult
 
 
@@ -72,7 +71,7 @@ def run_experiment(path, dry_run=False, agent_factory=OllamaAgent):
                 inference_config=a.inference, domain=task.domain, difficulty=task.difficulty,
                 input=task.input, expected_output=task.expected_output,
                 actual_output=response.content if response else None, **assessment, error_type=error,
-                start_time=start, end_time=datetime.now(timezone.utc), latency=time.perf_counter()-clock,
+                timestamp=start, start_time=start, end_time=datetime.now(timezone.utc), latency=time.perf_counter()-clock,
                 prompt_tokens=response.prompt_tokens if response else None,
                 output_tokens=response.output_tokens if response else None,
                 token_throughput=response.token_throughput if response else None,
