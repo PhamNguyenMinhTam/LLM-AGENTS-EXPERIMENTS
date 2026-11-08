@@ -7,9 +7,9 @@
 ## Kiểm chứng local
 - Có framework dùng chung và đầy đủ tài liệu E01–E12 bằng tiếng Việt.
 - 27 unit tests trước đợt sửa đã đạt trên cả 13 branch; 36 YAML điều kiện đã qua dry-run không gọi API.
-- Thêm trường timestamp UTC, lint Ruff và các yêu cầu mục lục, Mermaid, roadmap/checklist mới. Kết quả lint/tests đợt mới ghi sau khi chạy.
+- Thêm trường timestamp UTC, lint Ruff và các yêu cầu mục lục, Mermaid, roadmap/checklist mới. Đợt sửa mới: Ruff đạt và 27 tests đạt trên main cùng cả 12 branch sau khi tích hợp.
 - Mock chỉ ghi output vào thư mục tạm pytest; không có kết quả benchmark giả trong repository.
-- Có CI Ubuntu/Python 3.11–3.13 chạy lint/tests không cần Ollama/GPU; chưa xác minh Actions từ xa.
+- Có CI Ubuntu/Python 3.11–3.13 chạy lint/tests không cần Ollama/GPU; Actions main đã thành công: https://github.com/PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS/actions/runs/42491769414.
 - Không commit .env hoặc token; quét mẫu token/private key phổ biến không thay thế rà soát bảo mật đầy đủ.
 
 ## Giới hạn
@@ -30,3 +30,10 @@ git ls-remote --heads origin
 gh run list --repo PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS --limit 10
 ```
 Không tạo repo, không đổi visibility. Nếu remote có lịch sử mới, fetch/đối chiếu và tích hợp bảo toàn dữ liệu trước khi push.
+
+## Kết quả xuất bản thực tế
+- Đã push main trước, sau đó push đủ 12 experiment branch; `git ls-remote --heads origin` trả đủ 13 branch.
+- Giữ nguyên visibility Public của repository theo yêu cầu mới; không tạo repo hoặc đổi tên.
+- Git sử dụng thông tin xác thực sẵn có qua credential manager; GitHub CLI vẫn chưa đăng nhập, nhưng điều này không chặn Git push. Không đọc hoặc xuất thông tin xác thực.
+- CI main đã thành công với lint/tests; các push tiếp theo kích hoạt run mới, cần đối chiếu SHA khi kiểm tra trạng thái mới nhất.
+- Lịch sử được giữ nguyên; không force-push, không merge experiment về main. Kết thúc trên main.

@@ -7,8 +7,8 @@
 - [x] Tạo framework và cấu trúc E01–E12 trên local.
 - [x] Tạo 12 branch thí nghiệm có commit điều kiện riêng.
 - [x] Gắn origin đúng repository được chỉ định.
-- [ ] Push main và 12 branch; xác minh remote.
-- [ ] Xác minh GitHub Actions.
+- [x] Push main và 12 branch; xác minh remote.
+- [x] Xác minh GitHub Actions trên main.
 - [ ] Rà soát tài liệu sau từng đợt cập nhật.
 
 ## 2. Linux & Ollama Setup
