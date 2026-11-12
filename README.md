@@ -2,8 +2,6 @@
 
 ## Mục lục
 
-- [Repository sử dụng](#repository-sử-dụng)
-- [Giới thiệu và bối cảnh](#giới-thiệu-và-bối-cảnh)
 - [Mục tiêu](#mục-tiêu)
 - [Phạm vi và khái niệm](#phạm-vi-và-khái-niệm)
 - [Kiến trúc và công nghệ](#kiến-trúc-và-công-nghệ)
@@ -18,12 +16,6 @@
 - [Tiến độ và chiến lược branch](#tiến-độ-và-chiến-lược-branch)
 - [Chuyển branch và cập nhật tiến độ](#chuyển-branch-và-cập-nhật-tiến-độ)
 - [Hướng phát triển](#hướng-phát-triển)
-
-## Repository sử dụng
-Repository duy nhất: [PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS](https://github.com/PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS). Không tạo mới, không đổi tên hoặc tự thay visibility.
-
-## Giới thiệu và bối cảnh
-Dự án iTwin Lab 2026 đánh giá năng lực, hành vi, hiệu năng và khả năng thích nghi của LLM agent độc lập. Hai laptop Ubuntu, mỗi máy chạy một Ollama và một agent; Python Controller phân phối nhiệm vụ, lưu dữ liệu và đánh giá riêng từng agent. Ban đầu dùng cùng chip/model; sau đó thay có kiểm soát từng yếu tố.
 
 ## Mục tiêu
 Khảo sát năng lực nhiệm vụ, hành vi và tuân thủ, hiệu năng phần cứng, chuyên môn hóa, thích nghi và tính tái lập. Hai chip cùng loại vẫn có thể khác hiệu năng do nguồn điện, nhiệt độ và cấu hình hệ thống. Đo độ ổn định; tách ảnh hưởng họ model, kích thước, quantization và phần cứng; khảo sát domain, độ khó, prompt; xây dựng protocol tools, memory và feedback có đối chứng. Xem [mục tiêu](docs/research_objectives.md) và [phương pháp](docs/methodology.md).
