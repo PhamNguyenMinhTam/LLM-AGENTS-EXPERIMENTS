@@ -30,7 +30,11 @@ Q1: Linux/Ollama/API/inference, runtime, E01 và foundations. Q2: practical agen
 
 ## Publication
 
-Chưa xuất bản tại thời điểm lập báo cáo này; sẽ ghi kết quả push/PR sau thao tác. Không tự merge PR. Connector GitHub hiện báo quyền pull=true, push=false; shell gh chưa đăng nhập.
+- Đã commit code/tài liệu: `9e54ec58749b13b8d0370b8e213968b8cbd9f1c4`, push branch `refactor/one-year-agent-lab` thành công.
+- [GitHub Actions](https://github.com/PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS/actions/runs/43222984666): completed/success cho commit trên (matrix Python 3.11–3.13).
+- Sau push, đã đối chiếu remote: main và toàn bộ 12 branch E01–E12 giữ nguyên SHA trước thao tác.
+- PR chưa được tạo: connector báo quyền pull=true, push=false và API trả 403; shell gh chưa đăng nhập. Automatic approval review từ chối lấy Git credential lưu trên máy để dùng cho lệnh tạo PR, vì coi đó là tái sử dụng credential khi chưa có ủy quyền đủ rõ. Thao tác lấy credential đó chưa được chạy.
+- [Mở form PR từ branch đã push](https://github.com/PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS/compare/main...refactor/one-year-agent-lab?expand=1). Nội dung PR đã chuẩn bị tại workspace `one_year_lab_pr.md`. Không tự merge PR.
 
 ## Ba bước tiếp theo
 
