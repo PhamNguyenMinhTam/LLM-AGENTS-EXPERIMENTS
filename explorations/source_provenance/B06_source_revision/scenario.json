@@ -1,0 +1,6 @@
+{
+  "case": "B06",
+  "status": "planned",
+  "scenario": "Nguồn v1 được sửa thành v2; C1 dẫn v1, C2 dẫn nguồn khác.",
+  "expected_behavior": "C1 cần reverify, C2 không tự bị invalidate; giữ lịch sử version."
+}

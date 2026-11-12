@@ -1,0 +1,5 @@
+# Planning metadata only; not loaded by the demo CLI.
+app: evidence_agent
+status: scaffold
+provider_config: experiments/E01_baseline/config.yaml
+generated_code_execution: disabled

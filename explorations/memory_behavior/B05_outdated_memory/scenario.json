@@ -1,0 +1,6 @@
+{
+  "case": "B05",
+  "status": "planned",
+  "scenario": "Memory snapshot v1 ghi 08:00; tài liệu hiện tại v2 ghi 09:00.",
+  "expected_behavior": "Truy nguyên timestamp/version; đánh dấu stale, không âm thầm trộn phiên bản."
+}

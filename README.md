@@ -1,148 +1,125 @@
-# LLM Agents Experiments
+# LLM Agents Experiments — One-Year Hands-on Learning Lab
 
-## Mục lục
+Đây là mini project cá nhân khoảng một năm: **hiểu nguyên lý → tự xây agent → làm mini-app → thử điều kiện khác → quan sát lỗi → đọc paper → cải thiện**. Mục tiêu là kinh nghiệm thực hành, không yêu cầu phát hiện khoa học mới hay công bố paper.
 
-- [Repository sử dụng](#repository-sử-dụng)
-- [Giới thiệu và bối cảnh](#giới-thiệu-và-bối-cảnh)
-- [Mục tiêu](#mục-tiêu)
-- [Phạm vi và khái niệm](#phạm-vi-và-khái-niệm)
-- [Kiến trúc và công nghệ](#kiến-trúc-và-công-nghệ)
-- [Cấu trúc repository](#cấu-trúc-repository)
-- [Mười hai ma trận và yếu tố thay đổi](#mười-hai-ma-trận-và-yếu-tố-thay-đổi)
-- [Clone và cài đặt Ubuntu](#clone-và-cài-đặt-ubuntu)
-- [Cấu hình laptop A/B](#cấu-hình-laptop-ab)
-- [Chạy E01 và thí nghiệm khác](#chạy-e01-và-thí-nghiệm-khác)
-- [Thu thập và đánh giá](#thu-thập-và-đánh-giá)
-- [Lộ trình nghiên cứu](#lộ-trình-nghiên-cứu)
-- [Checklist tiến độ](#checklist-tiến-độ)
-- [Tiến độ và chiến lược branch](#tiến-độ-và-chiến-lược-branch)
-- [Chuyển branch và cập nhật tiến độ](#chuyển-branch-và-cập-nhật-tiến-độ)
-- [Hướng phát triển](#hướng-phát-triển)
+Repository duy nhất: [LLM-AGENTS-EXPERIMENTS](https://github.com/PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS).
 
-## Repository sử dụng
-Repository duy nhất: [PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS](https://github.com/PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS). Không tạo mới, không đổi tên hoặc tự thay visibility.
+## Vì sao làm và mục tiêu một năm
 
-## Giới thiệu và bối cảnh
-Dự án iTwin Lab 2026 đánh giá năng lực, hành vi, hiệu năng và khả năng thích nghi của LLM agent độc lập. Hai laptop Ubuntu, mỗi máy chạy một Ollama và một agent; Python Controller phân phối nhiệm vụ, lưu dữ liệu và đánh giá riêng từng agent. Ban đầu dùng cùng chip/model; sau đó thay có kiểm soát từng yếu tố.
+Tự xây hệ thống nhỏ giúp phân biệt năng lực model với tác động của prompt, công cụ, bộ nhớ và phần cứng. Sau một năm, mục tiêu là vận hành hai agent nhỏ, giải thích được vòng đời nhiệm vụ, đọc trace để phân tích lỗi, thiết kế phép thử có đối chứng và liên kết mỗi bài đọc với một quan sát có bằng chứng. Đây là mục tiêu **Planned**, chưa phải kết quả đã đạt.
 
-## Mục tiêu
-Khảo sát năng lực nhiệm vụ, hành vi và tuân thủ, hiệu năng phần cứng, chuyên môn hóa, thích nghi và tính tái lập. Hai chip cùng loại vẫn có thể khác hiệu năng do nguồn điện, nhiệt độ và cấu hình hệ thống. Đo độ ổn định; tách ảnh hưởng họ model, kích thước, quantization và phần cứng; khảo sát domain, độ khó, prompt; xây dựng protocol tools, memory và feedback có đối chứng. Xem [mục tiêu](docs/research_objectives.md) và [phương pháp](docs/methodology.md).
+## Hiểu các thành phần
 
-## Phạm vi và khái niệm
-Không có giao tiếp A–B hoặc phối hợp multi-agent. Comparison là so sánh điều kiện; Adaptation là điều chỉnh trạng thái/chiến lược qua kinh nghiệm; Model Evolution đòi hỏi thay đổi model có cơ chế học và bằng chứng. Thay model, prompt hoặc chip không chứng minh tiến hóa.
+| Thành phần | Vai trò |
+|---|---|
+| LLM | Model sinh văn bản từ ngữ cảnh; chạy inference qua Ollama |
+| Agent | Chương trình dùng model, trạng thái và chính sách để xử lý nhiệm vụ |
+| Tool | Hành động có cấu trúc do runtime kiểm soát, ví dụ đọc tài liệu |
+| Memory | Thông tin giữ lại để truy xuất; có thể cũ, sai hoặc nhiễm dữ liệu |
+| Controller | Chọn cấu hình, giao task độc lập và đánh giá; không phải agent trao đổi với nhau |
 
-## Kiến trúc và công nghệ
+## Hai laptop, hai agent độc lập
+
 ```mermaid
 flowchart LR
-    C[Python Controller] --> A[Agent A / Ollama laptop A]
-    C --> B[Agent B / Ollama laptop B]
-    A --> R[Results / JSONL]
+    C[Controller] --> A[Linux A: Coding Agent / Ollama]
+    C --> B[Linux B: Evidence Agent / Ollama]
+    A --> R[Trace và kết quả riêng]
     B --> R
-    R --> E[Evaluation / CSV]
+    R --> E[Evaluation và learning journal]
 ```
-Không có kết nối trực tiếp giữa Agent A và Agent B. Codex hỗ trợ xây dựng mã, kiểm thử và bảo trì repository; không tham gia làm đối tượng đo.
-Controller → Agent A / Ollama A và Controller → Agent B / Ollama B → evaluator → JSONL/CSV. Mỗi request độc lập, chỉ input được gửi đến model. Python ≥3.11, YAML/Pydantic, Git/GitHub Actions; mục tiêu triển khai Ubuntu. Xem [kiến trúc](docs/architecture.md).
 
-## Cấu trúc repository
-```text
-agents/       base_agent.py, ollama_agent.py, roles/
-controller/   config.py, experiment_runner.py, task_dispatcher.py
-configs/      agents.yaml, hardware.yaml, models.yaml, evaluation.yaml
-datasets/     coding/, mathematics/, classification/
-evaluation/   metrics.py, evaluator.py, result_schema.py
-experiments/  experiment_matrix.md, E01_baseline/ … E12_feedback/
-results/      raw/, summary/, figures/
-scripts/      setup_ubuntu.sh, check_environment.py, check_ollama.py, run_experiment.py
-tests/        config, agent, metrics, schema, runner và structure
-docs/         architecture, methodology, evaluation_guide, checklist, research_log, glossary
-.github/      workflows/ci.yml, ISSUE_TEMPLATE/experiment.md
-```
-Mỗi E có README.md, CHECKLIST.md, EVALUATION.md, config.yaml, run.py và results/.gitkeep. [Cây đầy đủ](docs/tree.txt).
+Ban đầu hai laptop dùng cùng loại CPU/chip. Mỗi máy chạy một LLM và một agent cho mini-domain riêng. Không có A2A, thương lượng, consensus hoặc belief aggregation engine. Codex hỗ trợ phát triển và kiểm thử. Sơ đồ mô tả đích triển khai; chưa xác minh hai laptop thật.
 
-## Mười hai ma trận và yếu tố thay đổi
-| ID | Yếu tố thay đổi | Cấu hình so sánh | Mục tiêu | Tài liệu |
-|---|---|---|---|---|
-| E01 | Baseline Stability | Cùng cấu hình, chạy lặp | Độ ổn định | [Kế hoạch](experiments/E01_baseline/README.md), [Checklist](experiments/E01_baseline/CHECKLIST.md), [Đánh giá](experiments/E01_baseline/EVALUATION.md) |
-| E02 | Model Type | Qwen / Llama / Gemma | Năng lực model | [Kế hoạch](experiments/E02_model_type/README.md), [Checklist](experiments/E02_model_type/CHECKLIST.md), [Đánh giá](experiments/E02_model_type/EVALUATION.md) |
-| E03 | Hardware | Chip X / Chip Y | Hiệu năng phần cứng | [Kế hoạch](experiments/E03_hardware/README.md), [Checklist](experiments/E03_hardware/CHECKLIST.md), [Đánh giá](experiments/E03_hardware/EVALUATION.md) |
-| E04 | Model Size | 1B / 3B / 7B–8B | Ảnh hưởng kích thước | [Kế hoạch](experiments/E04_model_size/README.md), [Checklist](experiments/E04_model_size/CHECKLIST.md), [Đánh giá](experiments/E04_model_size/EVALUATION.md) |
-| E05 | Quantization | Q4 / Q8 / FP16 | Đánh đổi chất lượng/tài nguyên | [Kế hoạch](experiments/E05_quantization/README.md), [Checklist](experiments/E05_quantization/CHECKLIST.md), [Đánh giá](experiments/E05_quantization/EVALUATION.md) |
-| E06 | Hardware × Model | Các tổ hợp chip–model | Tương tác phần cứng và model | [Kế hoạch](experiments/E06_hardware_model/README.md), [Checklist](experiments/E06_hardware_model/CHECKLIST.md), [Đánh giá](experiments/E06_hardware_model/EVALUATION.md) |
-| E07 | Domain | Generalist / Specialist | Chuyên môn hóa | [Kế hoạch](experiments/E07_domain/README.md), [Checklist](experiments/E07_domain/CHECKLIST.md), [Đánh giá](experiments/E07_domain/EVALUATION.md) |
-| E08 | Task Difficulty | Easy / Medium / Hard | Giới hạn năng lực | [Kế hoạch](experiments/E08_difficulty/README.md), [Checklist](experiments/E08_difficulty/CHECKLIST.md), [Đánh giá](experiments/E08_difficulty/EVALUATION.md) |
-| E09 | Prompt Strategy | Zero-shot / Few-shot / Structured | Ảnh hưởng prompt | [Kế hoạch](experiments/E09_prompt/README.md), [Checklist](experiments/E09_prompt/CHECKLIST.md), [Đánh giá](experiments/E09_prompt/EVALUATION.md) |
-| E10 | Tool Access | No Tool / Tool-enabled | Lợi ích công cụ | [Kế hoạch](experiments/E10_tools/README.md), [Checklist](experiments/E10_tools/CHECKLIST.md), [Đánh giá](experiments/E10_tools/EVALUATION.md) |
-| E11 | Memory | None / Short-term / Long-term | Khả năng sử dụng kinh nghiệm | [Kế hoạch](experiments/E11_memory/README.md), [Checklist](experiments/E11_memory/CHECKLIST.md), [Đánh giá](experiments/E11_memory/EVALUATION.md) |
-| E12 | Feedback | None / Binary / Detailed | Khả năng sửa lỗi | [Kế hoạch](experiments/E12_feedback/README.md), [Checklist](experiments/E12_feedback/CHECKLIST.md), [Đánh giá](experiments/E12_feedback/EVALUATION.md) |
+## mini-mOS và trạng thái thực tế
 
+[mini_mos](mini_mos/README.md) là framework thực hành cá nhân, không tuyên bố sao chép kiến trúc nội bộ ChatGPT hay mOS có sẵn. Slice hiện tại: Task → Runtime → Ollama adapter cũ → Result → Trace → exact-match evaluation. Đổi model bằng YAML, không sửa mini-app.
 
-## Clone và cài đặt Ubuntu
+| Thành phần | Trạng thái |
+|---|---|
+| Config, Ollama adapter, E01 runner, evaluator cũ | Implemented; kiểm thử mock |
+| Runtime một bước, trace và CLI | Implemented; live cần Ollama được cấu hình |
+| [Coding Agent](apps/coding_agent/README.md) | Scaffold; kiểm tra cú pháp tĩnh, chưa chạy code |
+| [Knowledge & Evidence Agent](apps/evidence_agent/README.md) | Fixture/mock B01; chưa trích claim bằng LLM |
+| Tools, persistent memory/RAG, feedback loop, belief revision | Planned |
+| B02–B08 | Planned; có scenario và tiêu chí quan sát |
+
+## Sáu learning tracks
+
+Xem [bản đồ bài học](learning/learning_tracks.md) và [concept map](learning/concept_map.md).
+
+| Track | Học qua thực hành |
+|---|---|
+| A — LLM Foundations | Ollama, model, context, sampling, quantization, giới hạn phần cứng; E01–E06 |
+| B — Agent Engineering | Lifecycle, state, policy, tools, permissions, lỗi và dừng; E07–E10 |
+| C — Practical Mini-Apps | Coding Agent, Evidence Agent, workflow, CLI và debugging |
+| D — Memory & Adaptation | Retrieval, reflection, feedback, sửa lỗi và memory contamination; E11–E12 |
+| E — Belief, Evidence & Verification | Claim, provenance, mâu thuẫn, dependency và verification; B01–B08 |
+| F — Future Multi-Agent Preparation | Ghi nhận giới hạn một agent và câu hỏi tương tác; chỉ tài liệu |
+
+## Mười hai experiment matrices
+
+Giữ nguyên tên, config, runner, README, checklist, evaluation và 12 branch thí nghiệm. [Ma trận](experiments/experiment_matrix.md) tiếp tục là nền benchmark, không thay thế mini-app và learning journal.
+
+| Nhóm | Experiments | Liên kết |
+|---|---|---|
+| Benchmark nền | E01 Baseline, E02 Model Type, E03 Hardware, E04 Model Size, E05 Quantization, E06 Hardware × Model | [Experiments](experiments/README.md) |
+| Agent Engineering | E07 Domain, E08 Difficulty, E09 Prompt, E10 Tools | [Tracks](learning/learning_tracks.md) |
+| Memory & Adaptation | E11 Memory, E12 Feedback | [Roadmap](ROADMAP.md) |
+
+Không có benchmark thật mới trong lần refactor này. Can thiệp tools/memory/feedback E10–E12 vẫn bị chặn nếu chưa triển khai runtime.
+
+## Đọc paper và khám phá belief/evidence
+
+[Literature](literature/README.md) có registry và mẫu note; phân biệt báo cáo của tác giả, diễn giải cá nhân và quan sát thực hành. [Explorations](explorations/README.md) có B01 đúng nguồn, B02 sai nguồn, B03 mâu thuẫn, B04 trùng bằng chứng, B05 memory cũ, B06 sửa nguồn, B07 lan truyền dependency và B08 ngân sách xác minh. B01 chỉ chứng minh fixture plumbing, không chứng minh nguồn đúng ngoài đời.
+
+## Roadmap và tiến độ
+
+[ROADMAP](ROADMAP.md): Q1 foundations; Q2 practical agents; Q3 memory/adaptation; Q4 reliability và chuẩn bị tương lai. [LEARNING_CHECKLIST](LEARNING_CHECKLIST.md) theo dõi sản phẩm học; [checklist benchmark cũ](docs/experiment_checklist.md) giữ nguyên. Một quý là ba tháng kể từ lúc bắt đầu, không áp đặt năm lịch.
+
+## Setup Linux
+
 ```bash
 git clone https://github.com/PhamNguyenMinhTam/LLM-AGENTS-EXPERIMENTS.git
 cd LLM-AGENTS-EXPERIMENTS
-```
-```bash
-bash scripts/setup_ubuntu.sh
+python3 -m venv .venv
 source .venv/bin/activate
+python -m pip install -r requirements.txt
 cp .env.example .env
-python -m scripts.check_environment
 python -m pytest -q
+python -m ruff check .
 ```
-Cài Ollama theo [hướng dẫn Linux chính thức](https://docs.ollama.com/linux), tải tag phù hợp ngân sách RAM/VRAM. Kiểm tra [API chat](https://docs.ollama.com/api/chat) và [metadata model](https://docs.ollama.com/api/tags). Không tự đoán digest/quantization.
 
-## Cấu hình laptop A/B
-Điền endpoint A/B khác nhau trong `.env`, model tag chính xác, digest và quantization từ `/api/tags`; hardware ID liên kết inventory `configs/hardware.yaml`. Hai endpoint localhost trong mẫu chỉ để phát triển; hai laptop cần địa chỉ LAN/VPN thực tế. Chỉ cho controller truy cập Ollama qua mạng tin cậy/firewall; không mở API ra Internet.
-Giữ cùng inference parameters, model digest, prompt và dataset cho E01. Với điều kiện model khác nhau, sửa từng agent trong bản sao YAML. Bốn file configs/ là inventory tham khảo; runner chỉ nạp config thí nghiệm được chọn. Prompt role là thư viện; YAML giữ nguyên văn prompt chạy thật.
+Giữ `.env` local. [Setup cũ và cấu hình hai laptop](docs/archive/README_before_one_year_lab.md) vẫn được bảo toàn. Cho live, điền endpoint LAN/VPN riêng cho A/B, exact model tag, digest, quantization và hardware ID trong config; không mở Ollama ra Internet. Dùng [hướng dẫn Ollama Linux](https://docs.ollama.com/linux) và metadata `/api/tags`; không đoán digest. Các file `configs/` là inventory; runner dùng YAML thí nghiệm được chọn.
 
-## Chạy E01 và thí nghiệm khác
+## Chạy slice, mini-app và E01
+
+Sau khi tạo `.env` từ mẫu, chạy offline:
+
 ```bash
+python -m mini_mos.cli --config experiments/E01_baseline/config.yaml --mock-response 5 --trace results/raw/slice-mock.json
+python -m apps.evidence_agent.app --fixture explorations/belief_formation/B01_correct_source/fixture.json
+python -m apps.coding_agent.app --source apps/coding_agent/fixtures/example.py
 python -m scripts.run_experiment --config experiments/E01_baseline/config.yaml --dry-run
+```
+
+Trace dùng chế độ tạo mới để tránh ghi đè: đổi tên nếu file đã tồn tại. `--mock-response` là dữ liệu giả lập được khai báo, không tự lấy expected answer làm phản hồi. Bỏ flag này chỉ khi đã điền cấu hình thật; CLI kiểm tra model trước gọi Ollama. Runtime chỉ chạy task đầu tiên; dùng E01 runner để đo đầy đủ:
+
+```bash
 python -m scripts.check_ollama --config experiments/E01_baseline/config.yaml
 python experiments/E01_baseline/run.py
 ```
-Cần `pip install -r requirements.txt` trước khi chạy wrapper. Thay đường dẫn E để chọn thí nghiệm. Dry-run cần biến môi trường đầy đủ nhưng chấp nhận placeholder, không gọi API và không ghi kết quả. Live từ chối placeholder và kiểm tra tag/digest/quantization trước đo.
-Đối chiếu [ma trận](experiments/experiment_matrix.md), sao chép config theo điều kiện, đặt condition riêng. E10–E12 có control chạy được, nhưng can thiệp tools/memory/feedback **chưa triển khai** và bị chặn bằng lỗi rõ ràng.
 
-## Thu thập và đánh giá
-Mỗi run lưu manifest (config resolve, dataset SHA256, commit, dirty flag), JSONL từng task và CSV từng agent ở `results/raw/E##/<run_id>/`. Không commit raw logs hoặc dữ liệu nhạy cảm. Expected output chỉ dùng evaluator, không đưa vào request. Exact-match là scorer MVP; coding tổng quát cần sandbox/test suite chưa có.
-Resource metrics, energy và TTFT chưa đo, ghi null; metrics định tính cần rubric và người chấm. Xem [hướng dẫn](docs/evaluation_guide.md) và từng EVALUATION.md. Không có kết quả benchmark thật trong repository; smoke task chỉ kiểm tra luồng.
+Kết quả benchmark: manifest, JSONL và CSV dưới `results/raw/`; trace slice là JSON riêng, không trộn với benchmark. Không commit raw logs, secrets hoặc model weights.
 
-## Lộ trình nghiên cứu
-| Giai đoạn | Nội dung | Điều kiện chuyển bước |
-|---|---|---|
-| Phase 0 | Repository và môi trường | Lint/tests đạt, hai endpoint được xác minh |
-| Phase 1 | Baseline E01 | Có dữ liệu lặp hợp lệ và sai số được báo cáo |
-| Phase 2 | Model và phần cứng E02–E06 | Cấu hình ghép cặp, đủ ô so sánh hoặc ghi không khả thi |
-| Phase 3 | Domain và hành vi E07–E10 | Dataset/rubric chuẩn hóa, tool trace nếu bật công cụ |
-| Phase 4 | Adaptation E11–E12 | Runtime can thiệp và tách development/final được kiểm chứng |
-| Phase 5 | Đánh giá và báo cáo | Có CI thống kê, phân tích lỗi và hồ sơ tái lập |
+## Duy trì learning journal
 
-## Checklist tiến độ
-- [x] Tạo framework local và đủ bộ tài liệu E01–E12.
-- [x] Kiểm thử mock/dry-run không phụ thuộc GPU.
-- [x] Push và xác minh đủ 13 remote branch.
-- [x] Xác minh GitHub Actions chạy lint/tests trên main.
-- [ ] Cài và xác minh hai laptop Linux/Ollama.
-- [ ] Khóa dataset nghiên cứu và rubric.
-- [ ] Chạy baseline E01 thật và lưu dữ liệu.
-- [ ] Thực hiện E02–E10 theo điều kiện kiểm soát.
-- [ ] Triển khai rồi đánh giá memory/feedback E11–E12.
-- [ ] Hoàn thành phân tích thống kê và báo cáo.
+Mỗi tuần sao chép mẫu trong [weekly_journal](learning/weekly_journal.md), ghi task/config/commit, điều đã test, lỗi và câu hỏi tiếp theo. Ghi nhận quan sát khác với giả thuyết giải thích. Không điền kết quả trước khi chạy. Xem [questions](learning/questions.md) và [lessons](learning/lessons_learned.md).
 
-## Tiến độ và chiến lược branch
-[Checklist tổng](docs/experiment_checklist.md) và các checklist trong bảng trên theo dõi chuẩn bị, thực thi, đánh giá, hoàn thành. Không đánh dấu hoàn thành khi chưa có bằng chứng.
-Main chứa nền tảng; 12 branch `experiment/e##-...` tạo trực tiếp từ main, có commit kế hoạch điều kiện riêng và không merge ngược. Cập nhật nền tảng trên main trước, sau đó tích hợp có kiểm soát. Xem [biên bản kiểm tra](docs/verification.md).
+## Giới hạn và hướng tương lai
 
-## Chuyển branch và cập nhật tiến độ
-```bash
-git fetch origin
-git switch experiment/e03-hardware
-python -m scripts.run_experiment --config experiments/E03_hardware/config.yaml --dry-run
-git switch main
-```
-Đánh dấu checklist tương ứng khi đã có bằng chứng; ghi ngày, run_id, commit/config/checksum và hạn chế vào `docs/research_log.md`. Chạy `python -m ruff check .` và `python -m pytest -q` trước commit. Không merge branch thí nghiệm về main nếu chưa có yêu cầu.
+Chưa chạy Ollama/hai laptop thật trong lần tái cấu trúc. Exact-match không đánh giá code tổng quát. Coding app không thực thi code vì chưa có sandbox cô lập CPU/RAM/thời gian/mạng. Chưa có tool loop, persistent memory, retrieval hay kiểm chứng ngữ nghĩa. B01 kiểm tra quote, source ID, hash và nhãn fixture, không xác nhận sự thật.
 
-## Hướng phát triển
-Chuẩn bị benchmark development/final có license; triển khai collector trên inference host; streaming TTFT; coding sandbox; tool loop có allowlist; memory tách session và feedback có trace; phân tích bootstrap/Pareto và biểu đồ. Chỉ mở rộng sang phối hợp agent khi có thiết kế nghiên cứu mới.
+[Future Multi-Agent](future_multi_agent/README.md) lưu candidate idea “Active Dependency Verification for Reliable Distributed Belief Aggregation in LLM-Based Multi-Agent Systems”. Đây chưa phải đề tài chốt hoặc kết quả được chứng minh. Chỉ xem xét bước đó sau [transition checklist](future_multi_agent/transition_checklist.md).
 
-Multi-Agent Communication chỉ xem xét ở giai đoạn sau với thiết kế nghiên cứu riêng; không thuộc Phase 1.
+Thay đổi nền tảng trên `refactor/one-year-agent-lab`, PR vào `main`; không tự merge, không force push và không sửa 12 branch thí nghiệm. Các branch `dev/*` chỉ tạo khi có nội dung riêng cần phát triển.

@@ -1,0 +1,6 @@
+{
+  "case": "B01",
+  "status": "fixture/mock",
+  "scenario": "Một tài liệu giả lập ghi thời gian mở cửa; claim dẫn đúng đoạn.",
+  "expected_behavior": "Quote/source ID/hash và answer khớp fixture; phản ví dụ sai quote/nguồn/answer bị từ chối."
+}

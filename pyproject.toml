@@ -16,8 +16,8 @@ dev = ["pytest==9.0.1", "ruff==0.14.4"]
 llm-experiment = "scripts.run_experiment:main"
 
 [tool.setuptools.packages.find]
-include = ["agents*", "controller*", "evaluation*", "scripts*"]
+include = ["agents*", "controller*", "evaluation*", "scripts*", "mini_mos*", "apps*"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "apps/coding_agent/tests", "apps/evidence_agent/tests"]
 pythonpath = ["."]

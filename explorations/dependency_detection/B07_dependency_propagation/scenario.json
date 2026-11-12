@@ -1,0 +1,6 @@
+{
+  "case": "B07",
+  "status": "planned",
+  "scenario": "S1 → C1 → C2; C3 chỉ dựa S2. S1 bị rút lại.",
+  "expected_behavior": "Liệt kê C1/C2 cần kiểm tra; giữ C3; tránh vòng lặp khi graph có cycle."
+}

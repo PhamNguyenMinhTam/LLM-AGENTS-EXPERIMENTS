@@ -28,3 +28,13 @@ Runner dùng chung, không có giao tiếp giữa agent. Branch dành riêng: `e
 Kỳ vọng kiểm chứng được giả thuyết cùng khoảng bất định, không bảo đảm hướng hiệu ứng.
 Config mặc định là điều kiện đối chứng. Runtime đối chứng đã triển khai; điều kiện so sánh cần điền cấu hình và thiết bị thực tế.
 Chưa chạy benchmark thực; không có kết quả khoa học trong repository.
+
+## Liên kết học qua thực hành
+
+- Learning Track: B/C; [tracks](../../learning/learning_tracks.md).
+- Related Paper: P01/P04/P05/P07; [registry](../../literature/paper_registry.md) (liên hệ học tập, không khẳng định reproduction).
+- Mini-App: [coding_agent](../../apps/coding_agent/README.md).
+- Exploration: [tool_calling](../../explorations/tool_calling/README.md).
+- Learning Journal: [mẫu tuần](../../learning/weekly_journal.md).
+
+Trạng thái benchmark/checklist cũ được giữ nguyên; thêm liên kết không có nghĩa đã chạy thí nghiệm.

@@ -1,0 +1,6 @@
+{
+  "case": "B08",
+  "status": "planned",
+  "scenario": "Ba claim có impact/cost khác nhau, budget hai lần kiểm tra.",
+  "expected_behavior": "Ghi policy/cost trước chạy, không vượt budget; so sánh với thứ tự cố định."
+}

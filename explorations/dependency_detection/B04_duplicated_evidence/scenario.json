@@ -1,0 +1,6 @@
+{
+  "case": "B04",
+  "status": "planned",
+  "scenario": "S2 sao chép S1, S3 độc lập; cả ba cùng khẳng định một claim.",
+  "expected_behavior": "Ghi S2 depends_on S1; báo hai nhóm nguồn, không ba bằng chứng độc lập."
+}

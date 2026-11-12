@@ -1,0 +1,12 @@
+{
+  "source": {
+    "source_id": "lab-handbook-v1",
+    "text": "The fictional lab opens at 09:00 on Monday."
+  },
+  "claim": {
+    "source_id": "lab-handbook-v1",
+    "quote": "opens at 09:00 on Monday",
+    "answer": "09:00"
+  },
+  "expected_answer": "09:00"
+}

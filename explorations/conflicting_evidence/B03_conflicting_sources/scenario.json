@@ -1,0 +1,6 @@
+{
+  "case": "B03",
+  "status": "planned",
+  "scenario": "S1 và S2 cùng ngày nhưng ghi giờ mở cửa khác nhau, chưa có nguồn ưu tiên.",
+  "expected_behavior": "Giữ cả hai provenance, nêu mâu thuẫn và chưa kết luận; không chọn theo số phiếu."
+}

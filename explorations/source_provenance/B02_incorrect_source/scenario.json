@@ -1,0 +1,6 @@
+{
+  "case": "B02",
+  "status": "planned",
+  "scenario": "Nguồn S1 ghi một giờ sai so với nguồn chuẩn S0 do người thiết kế cung cấp.",
+  "expected_behavior": "Không xem có quote là đủ đúng; báo chênh lệch với nguồn chuẩn và đánh dấu unverified."
+}
